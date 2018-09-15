@@ -9,11 +9,12 @@ from PIL import Image
 
 
 class Win10AssetSaver:
-    srcdirpath = ("C:\\Users\\ezhex\\AppData\\Local\\Packages"
-                  "\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\")
+    srcdirpath = os.path.join(
+        os.environ["UserProfile"], "AppData/Local/Packages/Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy/LocalState/Assets")
 
-    def saveBackground(dstdirpath, sizefilter):
-        print(dstdirpath)
+    def saveBackgrounds(dstdirpath, sizefilter):
+        print("source: ", Win10AssetSaver.srcdirpath)
+        print("destination:", dstdirpath)
         fileset = set()
         if os.path.exists(dstdirpath):
             for root, dirnames, filenames in os.walk(dstdirpath):
@@ -23,8 +24,8 @@ class Win10AssetSaver:
             os.mkdir(dstdirpath)
         for root, dirnames, filenames in os.walk(Win10AssetSaver.srcdirpath):
             for filename in filenames:
-                src = root + filename
-                dst = dstdirpath + filename
+                src = os.path.join(root, filename)
+                dst = os.path.join(dstdirpath, filename)
 
                 # already exist
                 if filename in fileset:
@@ -39,7 +40,10 @@ class Win10AssetSaver:
 
                 print("copy %s" % filename)
                 shutil.copy2(src, dst + ".jpg")
-        print("complete.")
+        print("complete.", end="\n\n")
 
 
-Win10AssetSaver.saveBackground("D:\\Image\\Win10Assets\\", (1920, 1080))
+Win10AssetSaver.saveBackgrounds(os.path.join(
+    os.environ["OneDrive"], "Pictures/Win10_1920x1080"), (1920, 1080))
+Win10AssetSaver.saveBackgrounds(os.path.join(
+    os.environ["OneDrive"], "Pictures/Win10_1080x1920"), (1080, 1920))

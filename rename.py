@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import shutil
 
 srcdirpath = "C:\\Users\\ezhex\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets\\"
 
